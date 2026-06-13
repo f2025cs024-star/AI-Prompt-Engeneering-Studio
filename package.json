@@ -1,0 +1,14 @@
+{
+  "name": "prompt-studio-web",
+  "version": "1.0.0",
+  "description": "Web GUI wrapper for C++ AI Prompt Engineering Studio",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "node backend/server.js",
+    "build": "g++ -std=c++11 backend/prompt_studio.cpp -o backend/prompt_studio"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

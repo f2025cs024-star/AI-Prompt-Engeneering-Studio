@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Prompt Engineering Studio</title>
+    <!-- Google Font: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-mode">
+
+    <!-- BACKGROUND GLOWS -->
+    <div class="blob-bg blob-1"></div>
+    <div class="blob-bg blob-2"></div>
+
+    <!-- 1. AUTH SCREEN -->
+    <div id="auth-screen" class="auth-container">
+        <div class="auth-card glass">
+            <div class="auth-header">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+                <h1>AI Prompt Engineering Studio</h1>
+                <p>Advanced Prompt Analysis & Enhancement Suite</p>
+            </div>
+            
+            <!-- Login Form -->
+            <form id="login-form" class="auth-form active">
+                <h2>Welcome Back</h2>
+                <div class="input-group">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" id="login-user" placeholder="Username" required autocomplete="username">
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="login-pass" placeholder="Password" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">
+                    <span>Login</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <p class="auth-switch">Don't have an account? <a href="#" id="to-register">Register</a></p>
+            </form>
+
+            <!-- Register Form -->
+            <form id="register-form" class="auth-form">
+                <h2>Create Account</h2>
+                <div class="input-group">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" id="register-user" placeholder="Username" required autocomplete="username">
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="register-pass" placeholder="Password" required autocomplete="new-password">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">
+                    <span>Register</span>
+                    <i class="fa-solid fa-user-plus"></i>
+                </button>
+                <p class="auth-switch">Already registered? <a href="#" id="to-login">Login</a></p>
+            </form>
+            
+            <div id="auth-alert" class="alert hidden"></div>
+        </div>
+    </div>
+
+    <!-- 2. MAIN APPLICATION SCREEN -->
+    <div id="app-screen" class="app-container hidden">
+        
+        <!-- SIDEBAR -->
+        <aside class="sidebar glass">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fa-solid fa-wand-magic-sparkles logo-glow"></i>
+                    <span style="font-size: 1.1rem; line-height: 1.2;">AI Prompt Engineering Studio</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-target="view-dashboard">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-target="view-analyzer">
+                    <i class="fa-solid fa-magnifying-glass-chart"></i>
+                    <span>Prompt Analyzer</span>
+                </a>
+                <a href="#" class="nav-item" data-target="view-compare">
+                    <i class="fa-solid fa-code-compare"></i>
+                    <span>Compare Tool</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="user-avatar">
+                        <i class="fa-solid fa-user-ninja"></i>
+                    </div>
+                    <div class="user-info">
+                        <span id="current-username" class="username">Guest</span>
+                        <span class="role">Prompt Engineer</span>
+                    </div>
+                </div>
+                <button id="btn-logout" class="btn-logout-icon" title="Logout">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="main-content">
+            
+            <!-- HEADER -->
+            <header class="main-header glass">
+                <h1 id="view-title">Dashboard</h1>
+                <div class="header-actions">
+                    <button id="btn-new-prompt-nav" class="btn btn-primary btn-sm">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>New Prompt</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- VIEW: DASHBOARD -->
+            <section id="view-dashboard" class="content-view active">
+                <!-- STATS COUNTERS -->
+                <div class="stats-grid">
+                    <div class="stat-card glass">
+                        <div class="stat-info">
+                            <h3>Total Prompts</h3>
+                            <span id="stat-total" class="stat-value">0</span>
+                        </div>
+                        <div class="stat-icon glow-purple">
+                            <i class="fa-solid fa-file-invoice"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card glass">
+                        <div class="stat-info">
+                            <h3>Average Quality</h3>
+                            <span id="stat-avg" class="stat-value">0.0</span>
+                        </div>
+                        <div class="stat-icon glow-green">
+                            <i class="fa-solid fa-chart-simple"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card glass">
+                        <div class="stat-info">
+                            <h3>Best Rating</h3>
+                            <span id="stat-best" class="stat-value">-</span>
+                        </div>
+                        <div class="stat-icon glow-blue">
+                            <i class="fa-solid fa-award"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CATEGORIES BREAKDOWN -->
+                <div class="section-title">
+                    <h2>Category Distribution</h2>
+                </div>
+                <div class="categories-bar-container glass">
+                    <div class="cat-bar-item" id="bar-coding">
+                        <span class="label">Coding</span>
+                        <div class="bar-outer"><div class="bar-inner" style="width: 0%;"></div></div>
+                        <span class="count">0</span>
+                    </div>
+                    <div class="cat-bar-item" id="bar-writing">
+                        <span class="label">Writing</span>
+                        <div class="bar-outer"><div class="bar-inner" style="width: 0%;"></div></div>
+                        <span class="count">0</span>
+                    </div>
+                    <div class="cat-bar-item" id="bar-research">
+                        <span class="label">Research</span>
+                        <div class="bar-outer"><div class="bar-inner" style="width: 0%;"></div></div>
+                        <span class="count">0</span>
+                    </div>
+                    <div class="cat-bar-item" id="bar-image">
+                        <span class="label">Image</span>
+                        <div class="bar-outer"><div class="bar-inner" style="width: 0%;"></div></div>
+                        <span class="count">0</span>
+                    </div>
+                </div>
+
+                <!-- FILTER AND SEARCH -->
+                <div class="filters-row glass">
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="search-input" placeholder="Search prompts by title or content...">
+                    </div>
+                    <div class="filter-options">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="favorites"><i class="fa-solid fa-star"></i> Favorites</button>
+                        <button class="filter-btn" data-filter="Coding">Coding</button>
+                        <button class="filter-btn" data-filter="Writing">Writing</button>
+                        <button class="filter-btn" data-filter="Research">Research</button>
+                        <button class="filter-btn" data-filter="Image">Image</button>
+                    </div>
+                </div>
+
+                <!-- PROMPT LIST -->
+                <div class="prompt-grid" id="prompt-list-container">
+                    <!-- Dynamic prompt cards will go here -->
+                    <div class="empty-state glass">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <p>No prompts found. Click "New Prompt" to start engineering!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW: ANALYZER -->
+            <section id="view-analyzer" class="content-view">
+                <div class="analyzer-layout">
+                    <!-- Left: Editor Pane -->
+                    <div class="editor-pane glass">
+                        <div class="pane-header">
+                            <h2>Prompt Editor</h2>
+                            <div class="editor-status" id="save-status">Draft</div>
+                        </div>
+
+                        <div class="editor-form">
+                            <input type="hidden" id="editor-prompt-id" value="0">
+                            
+                            <div class="form-group">
+                                <label for="editor-title">Prompt Title</label>
+                                <input type="text" id="editor-title" placeholder="Give your prompt a descriptive name..." required>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group flex-1">
+                                    <label for="editor-category">Category</label>
+                                    <select id="editor-category">
+                                        <option value="Coding">Coding</option>
+                                        <option value="Writing">Writing</option>
+                                        <option value="Research">Research</option>
+                                        <option value="Image">Image</option>
+                                    </select>
+                                </div>
+                                <div class="form-group flex-checkbox">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" id="editor-favorite">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-label"><i class="fa-solid fa-star star-color"></i> Favorite</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="editor-content">Prompt Content</label>
+                                <textarea id="editor-content" rows="12" placeholder="Write or paste your AI prompt here. The C++ Analyzer will evaluate it in real time..."></textarea>
+                            </div>
+
+                            <div class="form-actions">
+                                <button id="btn-save-prompt" class="btn btn-primary">
+                                    <i class="fa-solid fa-floppy-disk"></i>
+                                    <span>Save Prompt</span>
+                                </button>
+                                <button id="btn-enhance-prompt" class="btn btn-secondary" title="Enhance prompt structure using live rules to hit 5.0 Excellent quality">
+                                    <i class="fa-solid fa-wand-magic-sparkles" style="color: #a855f7;"></i>
+                                    <span>Auto-Enhance</span>
+                                </button>
+                                <button id="btn-clear-editor" class="btn btn-secondary">
+                                    <i class="fa-solid fa-eraser"></i>
+                                    <span>Clear</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Live Analysis Feedback -->
+                    <div class="feedback-pane glass">
+                        <div class="pane-header">
+                            <h2>C++ Engine Feedback</h2>
+                        </div>
+
+                        <!-- Score Panel -->
+                        <div class="analysis-score-card">
+                            <div class="score-radial">
+                                <svg class="progress-ring" width="120" height="120">
+                                    <circle class="progress-ring-circle-bg" stroke="rgba(255,255,255,0.05)" stroke-width="8" fill="transparent" r="50" cx="60" cy="60"/>
+                                    <circle class="progress-ring-circle" stroke="var(--primary-color)" stroke-width="8" fill="transparent" r="50" cx="60" cy="60"/>
+                                </svg>
+                                <div class="score-display">
+                                    <span id="analysis-score" class="score-number">0.0</span>
+                                    <span class="score-max">/5.0</span>
+                                </div>
+                            </div>
+                            <div class="score-labels">
+                                <div class="rating-label-box" id="analysis-rating-badge">WEAK</div>
+                                <span class="engine-tag"><i class="fa-solid fa-code"></i> C++ Analyzer Rules</span>
+                            </div>
+                        </div>
+
+                        <!-- Category-Specific Attributes Breakdown -->
+                        <div class="analysis-details">
+                            <h3>Metric Breakdown</h3>
+                            <div class="metrics-grid" id="metrics-grid-container">
+                                <!-- Dynamic criteria scores (Word Count, Target Language, Tone, etc.) -->
+                            </div>
+                        </div>
+
+                        <!-- Missing list -->
+                        <div class="analysis-missing-section" id="missing-section">
+                            <h3>Missing Elements</h3>
+                            <div class="missing-chips" id="missing-chips-container">
+                                <!-- Dynamic missing labels -->
+                            </div>
+                        </div>
+
+                        <!-- Improvement tips -->
+                        <div class="analysis-tips-section">
+                            <h3>Improvement Suggestions</h3>
+                            <ul class="tips-list" id="tips-list-container">
+                                <!-- Dynamic C++ tips -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Version History Container -->
+                <div class="version-history-panel glass hidden" id="version-history-panel">
+                    <h3><i class="fa-solid fa-clock-rotate-left"></i> Version History</h3>
+                    <div class="version-timeline" id="version-timeline-container">
+                        <!-- Version iterations -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW: COMPARE -->
+            <section id="view-compare" class="content-view">
+                <div class="compare-selector-row glass">
+                    <div class="compare-select-group">
+                        <label for="compare-p1">Prompt A</label>
+                        <select id="compare-p1" class="compare-select">
+                            <option value="">-- Choose Prompt A --</option>
+                        </select>
+                    </div>
+                    <div class="compare-divider">vs</div>
+                    <div class="compare-select-group">
+                        <label for="compare-p2">Prompt B</label>
+                        <select id="compare-p2" class="compare-select">
+                            <option value="">-- Choose Prompt B --</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="compare-grid">
+                    <!-- Column A -->
+                    <div class="compare-column glass" id="compare-col-1">
+                        <div class="compare-placeholder">
+                            <i class="fa-solid fa-arrow-pointer"></i>
+                            <p>Select Prompt A above to display details</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Column B -->
+                    <div class="compare-column glass" id="compare-col-2">
+                        <div class="compare-placeholder">
+                            <i class="fa-solid fa-arrow-pointer"></i>
+                            <p>Select Prompt B above to display details</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Databases / local storage (Do not push user data and prompts to public Git)
+backend/prompts.txt
+backend/users.txt
+
+# Binary files / Compiled C++ executables
+backend/prompt_studio.exe
+backend/prompt_studio
+*.o
+*.obj
+*.out
+
+# Editor files / OS temp files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
