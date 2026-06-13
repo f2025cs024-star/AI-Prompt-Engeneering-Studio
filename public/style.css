@@ -1375,27 +1375,111 @@ body {
 /* Responsive adjustments */
 @media (max-width: 1024px) {
     .app-container {
-        grid-template-columns: 1fr;
+        display: block;
+        padding-bottom: 70px; /* Space for bottom nav */
     }
+    
+    /* Transform Sidebar into Bottom Navigation */
     .sidebar {
-        display: none;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 70px;
+        flex-direction: row;
+        border-top: 1px solid var(--border-color);
+        background: rgba(15, 17, 26, 0.95);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
     }
+    .sidebar-header, .sidebar-footer {
+        display: none; /* Hide logo and profile on mobile */
+    }
+    .sidebar-nav {
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        padding: 0;
+        width: 100%;
+        gap: 0;
+    }
+    .nav-item {
+        flex-direction: column;
+        gap: 6px;
+        padding: 10px;
+        font-size: 0.75rem;
+        flex: 1;
+        text-align: center;
+        border-radius: 0;
+        border: none !important;
+        background: transparent !important;
+    }
+    .nav-item i {
+        font-size: 1.3rem;
+    }
+    .nav-item.active {
+        color: var(--primary-color);
+    }
+    .nav-item.active i {
+        filter: drop-shadow(0 0 8px var(--primary-glow));
+    }
+    
     .analyzer-layout {
         grid-template-columns: 1fr;
     }
+    .compare-selector-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .compare-divider {
+        margin: 10px 0;
+        text-align: center;
+    }
 }
+
 @media (max-width: 768px) {
+    .main-content {
+        padding: 20px 15px;
+    }
+    .main-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
     .stats-grid {
         grid-template-columns: 1fr;
     }
     .categories-bar-container {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
     }
     .filters-row {
         flex-direction: column;
         align-items: stretch;
     }
+    .filter-options {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .search-box {
+        max-width: 100%;
+    }
     .compare-grid {
         grid-template-columns: 1fr;
+    }
+    .auth-card {
+        padding: 30px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .categories-bar-container {
+        grid-template-columns: 1fr;
+    }
+    .form-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
     }
 }
